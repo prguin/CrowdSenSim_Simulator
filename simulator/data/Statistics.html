@@ -1,0 +1,334 @@
+<!DOCTYPE HTML>
+<html>
+    
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>CrowdSenSim</title>
+<meta name="keywords" content="CrowdSenSim, Mobile Crowd Sensing, Mobile Crowdsensing, Simulator" />
+<meta name="description" content="CrowdSenSim is a discrete-event simulator designed for research use in Mobile Crowd Sensing." />
+<link href="./style.css" rel="stylesheet" type="text/css" media="screen" />
+<script src="./Chart.js" type="text/javascript"></script>
+
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+
+    </style>
+
+
+<style>
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+td#t01 {
+    border: 0px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+td#map{
+    border: 1px solid #dddddd;
+    text-align: right;
+    padding: 0px;
+}
+
+th#t01 {
+    border: 0px solid #dddddd;
+    text-align: center;
+    padding: 0px;
+}
+
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+</style>
+
+</head>
+    
+<body>
+<!-- start header -->
+<div id="wrapper">
+<div id="header">
+	<div id="logo">
+		<h1>CrowdSenSim</h1>
+		<p><span>Mobile Crowd Sensing Simulator</span></p>
+	</div>
+	<div id="unilogo">
+	     <a href="http://uni.lu"><img src="http://localhost/CrowdSenSim/unilogo.png" alt="" width="90" height="90" /></a>
+	</div>
+</div>
+<!-- end header -->
+</div>
+
+
+<br><br> 
+
+
+<table  border = 0 , align="center" >
+
+
+<tr>
+	<td>
+	<table border = 1 , align= "left" , width="500", height="200", style="margin-left: 1cm;">
+		  
+	<tr>
+	    <th>Settings of simulation</th>
+	    <th></th>
+	  </tr>
+	  <tr>
+	    <td>Days</td>
+<td>1</td>
+	  </tr>
+	  <tr>
+	    <td>Number of users</td>
+<td>1</td>
+	  </tr>
+	  <tr>
+	    <td>Start hour</td>
+<td>1</td>
+	  </tr>
+	  <tr>
+	    <td>Finish hour</td>
+<td>1</td>
+	  </tr>
+	  <tr>
+	    <td>Type of AP</td>
+<td>1</td>
+	  </tr>
+	</table></td>
+
+
+	<td><iframe  bgcolor='#000033' src='./route_usr_1day_0.html' width='500' height='200' align='center'  frameborder='0'></iframe></td>
+
+	<td>
+	<table border = 1 , align= "right" , width="500", height="200", style="margin-right: 1cm;">
+	  <tr>
+	    <th>Statistics</th>
+	    <th></th>
+	  </tr>
+	  <tr>
+	    <td>Average number samples generated</td>
+<td>1</td>
+	  </tr>
+	  <tr>
+	    <td>Average amount of data generated</td>
+<td>1</td>
+	  </tr>
+	  <tr>
+	    <td>Average amount of current drain spent for sensing</td>
+<td>1</td>
+	  </tr>
+	  <tr>
+	</table>
+	</td>
+
+  </tr>
+</table>
+
+<div id="t01" align="center">Route first user</div>
+<br><br><br><br><br><br><br><br><br>
+<p></p>
+
+<table width="950" height="150" align="center">
+<tr>
+<td id="t01"><canvas id="myChart"></canvas></td>
+</tr>
+</table>
+
+
+<table width="950" height="150" align="center">
+<tr>
+    <th id="t01">Heatmap of Contributing Users</th>
+</tr>
+<tr>
+<td><iframe  bgcolor='#000033' src='./day_0.html' width='950' height='600' align='center'  frameborder='0'></iframe></td>
+</tr>
+</table>
+
+
+
+
+    <script>
+
+      // This example requires the Visualization library. Include the libraries=visualization
+      // parameter when you first load the API. For example:
+      // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=visualization">
+
+      var map, heatmap;
+
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 11,
+          center: {lat: <?php echo $lat ?>, lng: <?php echo $long ?>},
+          mapTypeId: 'satellite'
+        });
+
+        heatmap = new google.maps.visualization.HeatmapLayer({
+          data: getPoints(),
+          map: map
+        });
+      }
+
+      function toggleHeatmap() {
+        heatmap.setMap(heatmap.getMap() ? null : map);
+      }
+
+      function changeGradient() {
+        var gradient = [
+          'rgba(0, 255, 255, 0)',
+          'rgba(0, 255, 255, 1)',
+          'rgba(0, 191, 255, 1)',
+          'rgba(0, 127, 255, 1)',
+          'rgba(0, 63, 255, 1)',
+          'rgba(0, 0, 255, 1)',
+          'rgba(0, 0, 223, 1)',
+          'rgba(0, 0, 191, 1)',
+          'rgba(0, 0, 159, 1)',
+          'rgba(0, 0, 127, 1)',
+          'rgba(63, 0, 91, 1)',
+          'rgba(127, 0, 63, 1)',
+          'rgba(191, 0, 31, 1)',
+          'rgba(255, 0, 0, 1)'
+        ]
+        heatmap.set('gradient', heatmap.get('gradient') ? null : gradient);
+      }
+
+      function changeRadius() {
+        heatmap.set('radius', heatmap.get('radius') ? null : 20);
+      }
+
+      function changeOpacity() {
+        heatmap.set('opacity', heatmap.get('opacity') ? null : 0.2);
+      }
+
+
+      function getPoints() {
+        return [
+
+		<?php 
+		for($i=0;$i<1000;++$i){
+		echo $arrayHeatMap[$i] ;
+		}
+		?>
+        ];
+      }
+
+    </script>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAm0Vzu8yJEsabnGLJKb28NquaWzj3yB6E&libraries=visualization&callback=initMap">
+    </script>
+
+<script>
+    var c = document.getElementById('myChart');
+    var ctx = c.getContext('2d');
+    var data = {
+        labels: ["Day 1", "Day 2", "Day 3", "Day 4", "Day 5", "Day 6", "Day 7"],
+        datasets: [
+            {
+                label: "Average amount of energy spent for data transmission per-user (J)",
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255,99,132,1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1,
+data: [1,1,1,1,1,1,1,0],      
+      }
+        ]
+    };
+
+    var myBarChart = new Chart(ctx, {
+        type: 'bar',
+        data: data
+    });
+</script>
+<br><br><br> 
+<table border = 0 , align= "center" , width="1200", height="500">
+  <tr>
+    <th id="t01">Statistics users sensors  (MB)</th>
+    <th id="t01">Cumulative distribution function of battery drain</th>
+  </tr>
+<tr>
+    <td id="t01" height="500" width="600" style="background-color: #ffffff;"><canvas id="PieChart"></canvas> </td>
+    <td><iframe  bgcolor='#000033' src='./plot.png' width='640' height='500' align='center'  frameborder='0'></iframe></td>
+</tr>
+
+</table>
+
+
+   
+<script>   
+
+
+
+
+
+
+
+    var c = document.getElementById('PieChart');
+    var ctx = c.getContext('2d');
+
+   var data = {
+        label: "Average amount of energy spent for data transmission per-user (J)",
+    labels: [
+        "Accelerometer",
+        "GPS",
+        "Proximity"
+    ],
+    datasets: [
+        {
+            data: [12,13,14],
+            backgroundColor: [
+                "#FF6384",
+                "#36A2EB",
+                "#FFCE56"
+            ],
+            hoverBackgroundColor: [
+                "#FF6384",
+                "#36A2EB",
+                "#FFCE56"
+            ]
+        }]
+};
+
+var myPieChart = new Chart(ctx,{
+    type: 'pie',
+    data: data
+});
+</script>
+<!-- end page -->
+    
+<!-- start footer -->
+<div id="footer">
+	<p class="legal">
+		&copy; 2015-2016 &nbsp;-&nbsp; CrowdSenSim
+		&nbsp;&nbsp;&bull;&nbsp;&nbsp;
+		<a href="http://www.uni.lu">University of Luxembourg</a>
+	</p>
+</div>
+<!-- end footer -->
+
+
+    </body>
+</html>
