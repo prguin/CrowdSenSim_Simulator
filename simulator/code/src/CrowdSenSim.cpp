@@ -96,8 +96,8 @@ statdec=readStatDec();
 if(decision == 1){
 	num_users = readNumberUsers();
 	days = readDaySimulation();
-	fname="../data/Inputs/Mobility/UserMovementsListEvents_";
-	antennaFilename="../data/Inputs/CoordinatesAntennas.txt";
+	fname="./data/Inputs/Mobility/UserMovementsListEvents_";
+	antennaFilename="./data/Inputs/CoordinatesAntennas.txt";
 }
 
 
@@ -106,15 +106,15 @@ if(decision == 0){
 
 	num_users = 2000;
 	days = 2;
-	fname="../data/Inputs/Default/Mobility/UserMovementsListEventsDefault_";
-	antennaFilename="../data/Inputs/CoordinatesAntennasLuxembourg.txt";
+	fname="./data/Inputs/Default/Mobility/UserMovementsListEventsDefault_";
+	antennaFilename="./data/Inputs/CoordinatesAntennasLuxembourg.txt";
 }
 
 if(decision==2){
 
-	fname="../data/Inputs/Default/Mobility/chosen_list/UserMovementsListEvents_";
-	antennaFilename="../data/Inputs/Default/Mobility/chosen_list/CoordinatesAntennas.txt";
-	ifstream set("../data/Inputs/Default/Mobility/chosen_list/Setup.txt");
+	fname="./data/Inputs/Default/Mobility/chosen_list/UserMovementsListEvents_";
+	antennaFilename="./data/Inputs/Default/Mobility/chosen_list/CoordinatesAntennas.txt";
+	ifstream set("./data/Inputs/Default/Mobility/chosen_list/Setup.txt");
 	string s;
 	getline(set,s);
 	stringstream(s) >> num_users >> days ;

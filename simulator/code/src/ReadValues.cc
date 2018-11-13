@@ -24,7 +24,7 @@ int readDaySimulation(){
  */
 
 int days;
-ifstream in("../data/Setup.txt");
+ifstream in("./data/Setup.txt");
 	if(!in){
 		cerr << "Errors in file 'Setup.txt' " << endl;
 	}
@@ -46,7 +46,7 @@ int readNumberUsers(){
  */
 
 int num_users;
-ifstream in("../data/Setup.txt");
+ifstream in("./data/Setup.txt");
 if(!in){
 	cerr << "Errors in file 'Setup.txt' " << endl;
 }
@@ -71,7 +71,7 @@ string readKindAntennaFromSetupFile(){
  * It reads which type of antennas are used in the simulation, chosen in the "Setup.txt" file.
  */
 
-ifstream in("../data/Setup.txt");
+ifstream in("./data/Setup.txt");
 if(!in){
 	cerr << "Errors in file 'Setup.txt' " << endl;
 }
@@ -91,7 +91,7 @@ return typeOfAntennas;
 int readStatDec(){
 	int decision;
 
-	ifstream in("../data/Setup.txt");
+	ifstream in("./data/Setup.txt");
 	string dummyLine;
 	int i = 1;
 	while(i < 34){
@@ -112,7 +112,7 @@ int readDecision(){
  */
 
 int decision;
-ifstream in("../data/Setup.txt");
+ifstream in("./data/Setup.txt");
 
 string dummyLine;
 int i = 1;
@@ -128,7 +128,7 @@ stringstream(a) >> decision;
 in.close();
 
 if(decision==1){
-    ifstream f("../data/Inputs/Default/Mobility/chosen_list/UserMovementsListEvents_0.txt");
+    ifstream f("./data/Inputs/Default/Mobility/chosen_list/UserMovementsListEvents_0.txt");
     if(f.good()){
 
     	f.close();
@@ -148,7 +148,7 @@ int readRay(){
  */
 
 int ray;
-ifstream in("../data/Setup.txt");
+ifstream in("./data/Setup.txt");
 
 string dummyLine;
 int i = 1;
@@ -172,7 +172,7 @@ int readStartHour(){
  */
 
 int startHour;
-ifstream in("../data/Setup.txt");
+ifstream in("./data/Setup.txt");
 
 string dummyLine;
 int i = 1;
@@ -196,7 +196,7 @@ int readStartMinute(){
  */
 
 int startMinute;
-ifstream in("../data/Setup.txt");
+ifstream in("./data/Setup.txt");
 
 string dummyLine;
 int i = 1;
@@ -220,7 +220,7 @@ int readFinishtHour(){
  */
 
 int finishHour;
-ifstream in("../data/Setup.txt");
+ifstream in("./data/Setup.txt");
 
 string dummyLine;
 int i = 1;
@@ -244,7 +244,7 @@ int readFinishMinute(){
 */
 
 int finishMinute;
-ifstream in("../data/Setup.txt");
+ifstream in("./data/Setup.txt");
 
 string dummyLine;
 int i = 1;
@@ -267,7 +267,7 @@ int readMinimumTravelTime(){
  * It reads the minimum travel time set in the "Setup.txt" file.
  */
 int minimum_travel_time;
-ifstream in("../data/Setup.txt");
+ifstream in("./data/Setup.txt");
 
 string dummyLine;
 int i = 1;
@@ -291,7 +291,7 @@ int readMaximumTravelTime(){
  */
 
 int maximum_travel_time;
-ifstream in("../data/Setup.txt");
+ifstream in("./data/Setup.txt");
 
 string dummyLine;
 int i = 1;
@@ -311,7 +311,7 @@ return maximum_travel_time;
 
 int readTypeCons(){
 	int c;
-	ifstream in("../data/Setup.txt");
+	ifstream in("./data/Setup.txt");
 	string dummyLine;
 	int i = 1;
 	while(i < 38){
@@ -335,7 +335,7 @@ int readBatteryDecision(){
  */
 
 int decision;
-ifstream in("../data/Setup.txt");
+ifstream in("./data/Setup.txt");
 
 string dummyLine;
 int i = 1;
